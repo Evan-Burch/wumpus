@@ -36,13 +36,14 @@ void Agent::Initialize ()
 
 Action Agent::Process (Percept& percept)
 {
+	Update(percept);
 	if (percept.Glitter == true) {
 		actionList.push_back(GRAB);
-	} else if ((worldState.agentLocation == Location(1,1)) && worldState.agentHasGold) {
+	} else if ((worldState.agentLocation.X == 1) && (worldState.agentLocation.Y == 1) && worldState.agentHasGold) {
 		actionList.push_back(CLIMB);
-	} else if ((worldState.agentHasArrow) && (worldState.agentLocation.X == 4) && (worldState.agentOrientation = Orientation(UP))) {
+	} else if ((worldState.agentHasArrow) && (worldState.agentLocation.X == 4) && (worldState.agentOrientation == UP)) {
 		actionList.push_back(SHOOT);
-	} else if ((worldState.agentHasArrow) && (worldState.agentLocation.Y == 4) && (worldState.agentOrientation = Orientation(RIGHT))) {
+	} else if ((worldState.agentHasArrow) && (worldState.agentLocation.Y == 4) && (worldState.agentOrientation == RIGHT)) {
 		actionList.push_back(SHOOT);
 	} else {
 		int idx = rand() % 3;
@@ -51,7 +52,6 @@ Action Agent::Process (Percept& percept)
 	}
 	previousAction = actionList.front();
 	actionList.pop_back();
-	Update(percept);
 	return previousAction;
 }
 
@@ -71,9 +71,6 @@ void Agent::Move () {
 }
 
 void Agent::Update (Percept& percept) {
-	if(previousAction == CLIMB){
-		worldState.agentHasGold = true;
-	}
 	if(previousAction == SHOOT){
 		worldState.agentHasArrow = false;
 	}
@@ -83,13 +80,29 @@ void Agent::Update (Percept& percept) {
 		}
 	}
 	if(previousAction == TURNLEFT){
-		worldState.agentOrientation = Orientation(LEFT);
+		if (worldState.agentOrientation == RIGHT)
+			worldState.agentOrientation = UP;
+		else if (worldState.agentOrientation == UP)
+			worldState.agentOrientation = LEFT;
+		else if (worldState.agentOrientation == LEFT)
+			worldState.agentOrientation = DOWN;
+		else if (worldState.agentOrientation == DOWN)
+			worldState.agentOrientation = RIGHT;
 	}
 	if(previousAction == TURNRIGHT){
-		worldState.agentOrientation = Orientation(RIGHT);
+		if (worldState.agentOrientation == RIGHT)
+			worldState.agentOrientation = DOWN;
+		else if (worldState.agentOrientation == UP)
+			worldState.agentOrientation = RIGHT;
+		else if (worldState.agentOrientation == LEFT)
+			worldState.agentOrientation = UP;
+		else if (worldState.agentOrientation == DOWN)
+			worldState.agentOrientation = LEFT;
 	}
+	// If we just tried to grab the gold and the glitter is gone, we must have the gold
 	if(previousAction == GRAB){
-		percept.Glitter = true;
+		if (percept.Glitter == false)
+			worldState.agentHasGold = true;
 	}
 }
 
