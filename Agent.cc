@@ -35,16 +35,6 @@ void Agent::Initialize ()
 
 Action Agent::Process (Percept& percept)
 {
-	cout << "agentLocation: (" <<  worldState.agentLocation.X << ", " << worldState.agentLocation.Y << ")" << endl;
-	cout << "agentOrientation: " << worldState.agentOrientation << endl;
-	cout << "agentHasArrow: " << worldState.agentHasArrow << endl;
-	cout << "agentHasGold: " << worldState.agentHasGold << endl;
-	Update(percept);
-	cout << "AFTER UPDATE" << endl;
-	cout << "agentLocation: (" <<  worldState.agentLocation.X << ", " << worldState.agentLocation.Y << ")" << endl;
-	cout << "agentOrientation: " << worldState.agentOrientation << endl;
-	cout << "agentHasArrow: " << worldState.agentHasArrow << endl;
-	cout << "agentHasGold: " << worldState.agentHasGold << endl;
 	if (percept.Glitter == true) {
 		actionList.push_back(GRAB);
 	} else if ((worldState.agentLocation.X == 1) && (worldState.agentLocation.Y == 1) && worldState.agentHasGold) {
