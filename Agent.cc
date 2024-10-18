@@ -74,7 +74,7 @@ void Agent::Move () {
 		worldState.agentLocation.X += 1;
 	}
 	if(worldState.agentOrientation == LEFT){
-		worldState.agentLocation.Y -= 1;
+		worldState.agentLocation.X -= 1;
 	}
 }
 
