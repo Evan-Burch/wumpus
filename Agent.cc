@@ -36,22 +36,22 @@ void Agent::Initialize ()
 
 Action Agent::Process (Percept& percept)
 {
-	Update(percept);
-		if (percept.Glitter == true) {
-			actionList.push_back(GRAB);
-		} else if ((worldState.agentLocation == Location(1,1)) && worldState.agentHasGold) {
-			actionList.push_back(CLIMB);
-		} else if ((worldState.agentHasArrow) && (worldState.agentLocation.X == 4) && (worldState.agentOrientation = Orientation(UP))) {
-			actionList.push_back(SHOOT);
-		} else if ((worldState.agentHasArrow) && (worldState.agentLocation.Y == 4) && (worldState.agentOrientation = Orientation(RIGHT))) {
-			actionList.push_back(SHOOT);
-		} else {
-			int idx = rand() % 3;
-			Action randAction = Action(idx);
-			actionList.push_back(randAction);
-		}
+	if (percept.Glitter == true) {
+		actionList.push_back(GRAB);
+	} else if ((worldState.agentLocation == Location(1,1)) && worldState.agentHasGold) {
+		actionList.push_back(CLIMB);
+	} else if ((worldState.agentHasArrow) && (worldState.agentLocation.X == 4) && (worldState.agentOrientation = Orientation(UP))) {
+		actionList.push_back(SHOOT);
+	} else if ((worldState.agentHasArrow) && (worldState.agentLocation.Y == 4) && (worldState.agentOrientation = Orientation(RIGHT))) {
+		actionList.push_back(SHOOT);
+	} else {
+		int idx = rand() % 3;
+		Action randAction = Action(idx);
+		actionList.push_back(randAction);
+	}
 	previousAction = actionList.front();
 	actionList.pop_back();
+	Update(percept);
 	return previousAction;
 }
 
