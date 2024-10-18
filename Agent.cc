@@ -1,3 +1,5 @@
+// Evan Burch
+
 // Agent.cc
 
 #include <ctime>
@@ -35,6 +37,8 @@ void Agent::Initialize ()
 
 Action Agent::Process (Percept& percept)
 {
+	Update(percept);
+
 	if (percept.Glitter == true) {
 		actionList.push_back(GRAB);
 	} else if ((worldState.agentLocation.X == 1) && (worldState.agentLocation.Y == 1) && worldState.agentHasGold) {
