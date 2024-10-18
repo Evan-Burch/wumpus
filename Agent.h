@@ -18,10 +18,11 @@ public:
 	Action Process (Percept& percept);
 	void Move ();
 	void Update (Percept& percept);
+	void GameOver (int score);
+private:
 	WorldState worldState;
 	Action previousAction;
 	list<Action> actionList;
-	void GameOver (int score);
 };
 
 #endif // AGENT_H
