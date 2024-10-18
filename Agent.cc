@@ -27,7 +27,7 @@ void Agent::Initialize ()
 {
 	WorldState worldState;
 	worldState.agentHasArrow = true;
-	worldState.agentOrientation = UP;
+	worldState.agentOrientation = RIGHT;
 	worldState.agentHasGold = false;
 	worldState.agentLocation = Location(1,1);
 	Action previousAction = CLIMB;
